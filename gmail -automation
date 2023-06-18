@@ -1,0 +1,39 @@
+from selenium import webdriver
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+import time
+from selenium.webdriver.support.ui import WebDriverWait
+
+
+browser = webdriver.Chrome()
+
+browser.get('https://mail.google.com')
+
+
+browser.find_element(By.ID, 'identifierId').send_keys('ajithkumar@newgendigital.com' )  # Find the search box
+browser.find_element(By.XPATH,"//*[@id='identifierNext']/div/button/span").click()
+browser.implicitly_wait(4)
+browser.find_element(By.XPATH,"//*[@id='password']/div[1]/div/div[1]/input").send_keys("Ajith@1997")
+browser.find_element(By.XPATH,"//*[@id='passwordNext']/div/button/span").click()
+element_to_hover_over=browser.find_element(By.XPATH,'/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]')
+actions = ActionChains(browser)
+
+# Perform the mouse hover
+actions.move_to_element(element_to_hover_over).perform()
+
+# Wait for the suggestion to appear
+suggestion_locator = (By.CSS_SELECTOR, "ul.suggestions li")
+suggestion_element = browser.find_element(*suggestion_locator)
+
+# Click on the suggestion to select it
+actions.move_to_element(suggestion_element).click().perform()
+
+'''browser.find_element(By.XPATH,'//*[@id="gs_lc50"]/input[1]').send_keys("Buvaneshwari")
+
+browser.find_element(By.XPATH,'//*[@id="aso_search_form_anchor"]/button[2]').click()'''
+input("Press Enter to close the browser...")
+
+# Close the browser
+browser.close()
